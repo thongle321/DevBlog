@@ -1,15 +1,12 @@
 <div class="flex items-center">
     @guest
-
         <div class="flex space-x-5">
-            <a class="flex space-x-2 items-center hover:text-yellow-500 text-sm text-gray-500"
-                href="http://127.0.0.1:8000/login">
-                Login
-            </a>
-            <a class="flex space-x-2 items-center hover:text-yellow-500 text-sm text-gray-500"
-                href="http://127.0.0.1:8000/register">
-                Register
-            </a>
+            <x-nav-link href="{{ route('login') }}" :active="request()->routeIs('login')">
+                {{ __('Đăng nhập') }}
+            </x-nav-link>
+            <x-nav-link href="{{ route('register') }}" :active="request()->routeIs('register')">
+                {{ __('Đăng ký') }}
+            </x-nav-link>
         </div>
     @endguest
     @auth
@@ -43,12 +40,12 @@
                         {{ __('Manage Account') }}
                     </div>
 
-                    <x-dropdown-link href="{{ route('profile.show') }}">
+                    <x-dropdown-link wire:navigate href="{{ route('profile.show') }}">
                         {{ __('Profile') }}
                     </x-dropdown-link>
 
                     @if (Laravel\Jetstream\Jetstream::hasApiFeatures())
-                        <x-dropdown-link href="{{ route('api-tokens.index') }}">
+                        <x-dropdown-link wire:navigate href="{{ route('api-tokens.index') }}">
                             {{ __('API Tokens') }}
                         </x-dropdown-link>
                     @endif

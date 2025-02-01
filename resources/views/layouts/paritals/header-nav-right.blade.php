@@ -8,10 +8,10 @@
         </li> --}}
         <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
             <x-nav-link href="{{ route('home') }}" :active="request()->routeIs('home')">
-                {{ __('Bài viết') }}
+                {{ __('Home') }}
             </x-nav-link>
-            <x-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
-                {{ __('Danh mục') }}
+            <x-nav-link href="{{ route('posts.index') }}" :active="request()->routeIs('posts.index')">
+                {{ __('Bài viết') }}
             </x-nav-link>
         </div>
     </div>
