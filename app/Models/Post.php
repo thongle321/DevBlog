@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class Post extends Model
@@ -13,20 +14,11 @@ class Post extends Model
     use HasFactory;
     use SoftDeletes;
 
-    protected $fillable = [
-        'user_id',
-        'title',
-        'slug',
-        'image',
-        'body',
-        'published_at',
-        'featured',
-    ];
+    protected $fillable = ['user_id', 'title', 'slug', 'image', 'body', 'published_at', 'featured'];
 
-    protected $casts =
-        [
-            'published_at' => 'datetime',
-        ];
+    protected $casts = [
+        'published_at' => 'datetime',
+    ];
 
     public function author()
     {
@@ -35,7 +27,7 @@ class Post extends Model
 
     public function types()
     {
-        return $this->belongsToMany(Type::class, 'type_posts', 'post_id', 'type_id');
+        return $this->belongsToMany(Type::class, 'type_post');
     }
 
     public function scopePublished($query)
@@ -46,6 +38,13 @@ class Post extends Model
     public function scopeFeatured($query)
     {
         $query->where('featured', true);
+    }
+
+    public function scopeWithType($query, string $type)
+    {
+        $query->whereHas('types', function ($query) use ($type) {
+            $query->where('slug', $type);
+        });
     }
 
     public function getExcerpt()
@@ -65,5 +64,12 @@ class Post extends Model
         Carbon::setLocale('vi');
 
         return $this->published_at->diffForHumans();
+    }
+
+    public function getThumbnailImage()
+    {
+        $urlImage = str_contains($this->image, 'http');
+
+        return $urlImage ? $this->image : Storage::disk('public')->url($this->image);
     }
 }

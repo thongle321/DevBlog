@@ -3,6 +3,7 @@
 namespace App\Livewire;
 
 use App\Models\Post;
+use App\Models\Type;
 use Livewire\Attributes\Computed;
 use Livewire\Attributes\On;
 use Livewire\Attributes\Url;
@@ -13,15 +14,25 @@ class PostList extends Component
 {
     use WithPagination;
 
-    #[Url()]
+    #[Url]
     public $sort = 'desc';
 
-    #[Url()]
+    #[Url]
     public $search = '';
+
+    #[Url]
+    public $type = '';
 
     public function setSort($sort)
     {
-        $this->sort = ($sort === 'desc') ? 'desc' : 'asc';
+        $this->sort = $sort === 'desc' ? 'desc' : 'asc';
+        $this->resetPage();
+    }
+
+    public function clearFilters()
+    {
+        $this->search = '';
+        $this->type = '';
         $this->resetPage();
     }
 
@@ -31,10 +42,22 @@ class PostList extends Component
         $this->search = $search;
     }
 
-    #[Computed()]
+    #[Computed]
     public function posts()
     {
-        return Post::published()->orderBy('published_at', $this->sort)->where('title', 'like', "%{$this->search}%")->simplePaginate(3);
+        return Post::published()
+            ->orderBy('published_at', $this->sort)
+            ->when($this->activeType, function ($query) {
+                $query->withType($this->type);
+            })
+            ->where('title', 'like', "%{$this->search}%")
+            ->paginate(3);
+    }
+
+    #[Computed()]
+    public function activeType()
+    {
+        return Type::where('slug', $this->type)->first();
     }
 
     public function render()

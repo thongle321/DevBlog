@@ -13,4 +13,9 @@ class Type extends Model
         'title',
         'slug',
     ];
+
+    public function posts()
+    {
+        return $this->belongsToMany(Post::class, 'type_post');
+    }
 }

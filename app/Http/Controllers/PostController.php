@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Post;
+use App\Models\Type;
 use Illuminate\Http\Request;
 
 class PostController extends Controller
@@ -12,9 +13,12 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::take(5)->get();
+        $posts = Post::take(10)->get();
+        $types = Type::whereHas('posts', function ($query) {
+            $query->published();
+        })->take(10)->get();
 
-        return view('posts.index', compact('posts'));
+        return view('posts.index', compact('types'));
     }
 
     /**
