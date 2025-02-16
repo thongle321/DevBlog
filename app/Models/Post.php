@@ -59,6 +59,13 @@ class Post extends Model
         return $mins < 1 ? 1 : $mins;
     }
 
+    public function getWordCount()
+    {
+        $words = str_word_count($this->body);
+
+        return $words;
+    }
+
     public function getPublishedAtVNFormat()
     {
         Carbon::setLocale('vi');

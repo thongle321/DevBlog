@@ -5,7 +5,6 @@
                 <button class="text-gray-400 mr-3" wire:click="clearFilters()">X</button>
             @endif
             @if ($this->activeType)
-                <span class="dark:text-gray-400">Tất cả bài viết từ:</span>
                 @php
                     $isActive = request('type') == $this->activeType->title;
                 @endphp

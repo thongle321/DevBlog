@@ -7,12 +7,11 @@
         </div>
         <div class="col-span-8">
             <div class="article-meta flex py-1 text-sm items-center">
-                <img class="w-7 h-7 rounded-full mr-3" src="{{ $post->author->profile_photo_url }}" alt="avatar">
-                <span class="mr-1 text-xs dark:text-[#D7D3BF]">{{ $post->author->name }}</span>
+                <x-posts.author :author="$post->author" />
                 <span class="text-gray-500 text-xs">. {{ $post->getPublishedAtVNFormat() }}</span>
             </div>
             <h2 class="text-xl font-bold text-gray-900 dark:text-[#D7D3BF]">
-                <a href="http://127.0.0.1:8000/blog/first%20post">
+                <a href="{{ route('posts.show', $post->slug)}}">
                     {{ $post->title }}
                 </a>
             </h2>
@@ -23,16 +22,7 @@
             <div class="article-actions-bar mt-6 flex items-center justify-between">
                 <div class="flex gap-x-2">
                     @foreach ($post->types as $type)
-                    @php
-                    $isActive = request('type') == $type->title;
-                @endphp
-                <a wire:navigate href="{{ route('posts.index', ['type' => $type->title]) }}"
-                    class="{{ $isActive
-                        ? 'bg-[#D4EBF8] text-black'
-                        : 'bg-neutral-300
-                            text-black' }}
-            rounded-xl px-3 py-1 text-base">
-                    {{ $type->title }}</a>
+                        <x-posts.type-badge :type="$type" />
                     @endforeach
                     <div class="flex items-center space-x-4">
                         <span class="text-gray-500 text-sm">{{ $post->getReadingTime() }} phút đọc</span>
