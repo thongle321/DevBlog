@@ -18,6 +18,6 @@
                 type="text" placeholder="Tìm kiếm...">
         </div>
         <x-button x-on:click="$dispatch('search', {
-            search : query})">search</x-button>
+            search : query})">Tìm</x-button>
     </div>
 </div>

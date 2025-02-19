@@ -3,9 +3,9 @@
     <div class="topics flex flex-wrap justify-start gap-2">
         @foreach ($types as $type)
             @php
-                $isActive = request('type') == $type->title;
+                $isActive = request('type') == $type->slug;
             @endphp
-            <a wire:navigate href="{{ route('posts.index', ['type' => $type->title]) }}"
+            <a wire:navigate href="{{ route('posts.index', ['type' => $type->slug]) }}"
                 class="{{ $isActive
                     ? 'bg-[#D4EBF8] text-black'
                     : 'bg-neutral-300

@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
+
 class Post extends Model
 {
     use HasFactory;
@@ -79,4 +80,6 @@ class Post extends Model
 
         return $urlImage ? $this->image : Storage::disk('public')->url($this->image);
     }
+
+
 }

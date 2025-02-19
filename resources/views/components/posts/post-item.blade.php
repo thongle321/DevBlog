@@ -1,7 +1,9 @@
-<article class="[&:not(:last-child)]:border-b border-gray-10  dark:border-gray-100/5  pb-10">
+@props(['post'])
+<article
+    {{ $attributes->merge(['class' => '[&:not(:last-child)]:border-b border-gray-10  dark:border-gray-100/5  pb-10']) }}>
     <div class="article-body grid grid-cols-12 gap-3 mt-5 items-start">
         <div class="article-thumbnail col-span-4 flex items-center">
-            <a href="">
+            <a href="{{ route('posts.show', $post->slug) }}">
                 <img class="mw-100 mx-auto rounded-xl" src="{{ $post->getThumbnailImage() }}" alt="thumbnail">
             </a>
         </div>
@@ -11,7 +13,7 @@
                 <span class="text-gray-500 text-xs">. {{ $post->getPublishedAtVNFormat() }}</span>
             </div>
             <h2 class="text-xl font-bold text-gray-900 dark:text-[#D7D3BF]">
-                <a href="{{ route('posts.show', $post->slug)}}">
+                <a href="{{ route('posts.show', $post->slug) }}">
                     {{ $post->title }}
                 </a>
             </h2>

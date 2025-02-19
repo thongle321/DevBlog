@@ -8,7 +8,7 @@
         </li> --}}
         <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
             <x-nav-link href="{{ route('home') }}" :active="request()->routeIs('home')">
-                {{ __('Home') }}
+                {{ __('Trang chủ') }}
             </x-nav-link>
             <x-nav-link href="{{ route('posts.index') }}" :active="request()->routeIs('posts.index')">
                 {{ __('Bài viết') }}

@@ -40,12 +40,14 @@ class PostList extends Component
     public function updatedSearch($search)
     {
         $this->search = $search;
+        $this->resetPage();
     }
 
     #[Computed]
     public function posts()
     {
         return Post::published()
+            ->with('author', 'types')
             ->orderBy('published_at', $this->sort)
             ->when($this->activeType, function ($query) {
                 $query->withType($this->type);
@@ -54,9 +56,12 @@ class PostList extends Component
             ->paginate(3);
     }
 
-    #[Computed()]
+    #[Computed]
     public function activeType()
     {
+        if ($this->type === null || $this->type === '') {
+            return null;
+        }
         return Type::where('slug', $this->type)->first();
     }
 

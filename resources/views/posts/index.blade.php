@@ -1,5 +1,5 @@
 @props(['post'])
-<x-app-layout>
+<x-app-layout title='Bài viết'>
     <main class="container mx-auto px-5 flex flex-grow">
         <div class="w-full grid grid-cols-4 gap-10">
             <div class="md:col-span-3 col-span-4">

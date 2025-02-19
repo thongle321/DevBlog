@@ -1,4 +1,4 @@
-<x-app-layout>
+<x-app-layout title="Trang chủ">
     @section('welcome')
         <div class="w-full text-center py-32">
             <h1 class="text-2xl md:text-3xl font-bold text-center lg:text-5xl text-gray-700 dark:text-[#D7D3BF]">
@@ -16,7 +16,7 @@
             <h2 class="mt-16 mb-5 text-2xl text-gray-900 dark:text-yellow-500 font-bold">Bài viết nổi bật</h2>
             <div class="w-full">
                 <div class="grid grid-cols-2 gap-10 w-full">
-                    @foreach ($posts as $post)
+                    @foreach ($featuredPosts as $post)
                         <div class="md:col-span-1 col-span-3">
                             <x-posts.post-card :post="$post" />
                         </div>
@@ -34,7 +34,6 @@
             <div class="grid grid-cols-2 gap-10 w-full">
                 @foreach ($latestPosts as $post)
                     <div class="md:col-span-1 col-span-3">
-
                         <x-posts.post-card :post="$post" />
                     </div>
                 @endforeach

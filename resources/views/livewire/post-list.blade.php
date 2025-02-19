@@ -6,15 +6,15 @@
             @endif
             @if ($this->activeType)
                 @php
-                    $isActive = request('type') == $this->activeType->title;
+                    $isActive = request('type') == $this->activeType->slug;
                 @endphp
-                <a wire:navigate href="{{ route('posts.index', ['type' => $this->activeType->title]) }}"
+                <a wire:navigate href="{{ route('posts.index', ['type' => $this->activeType->slug]) }}"
                     class="{{ $isActive
                         ? 'bg-[#D4EBF8] text-black'
                         : 'bg-neutral-300
-                                        text-black' }}
+                         text-black' }}
     rounded-xl px-3 py-1 text-base">
-                    {{ $this->activeType->title }}</a>
+                {{ $this->activeType->title }}</a>
             @endif
             @if ($search)
                 Tìm kiếm {{ $search }}
@@ -31,7 +31,7 @@
     </div>
     <div class="py-4">
         @foreach ($this->posts as $post)
-            <x-posts.post-item :post="$post" />
+            <x-posts.post-item wire:key="{{ $post->id }}" :post="$post" />
         @endforeach
     </div>
     <div class="my-3">

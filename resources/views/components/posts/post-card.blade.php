@@ -10,7 +10,7 @@
             @if ($type = $post->types()->first())
                 <x-posts.type-badge :type="$type" />
             @endif
-            <p class="text-white-500 dark:text-[#DFD3C3] text-sm">{{ $post->published_at }}</p>
+            <p class="text-white-500 dark:text-[#DFD3C3] text-sm">{{ $post->published_at->format('d-m-Y')  }}</p>
         </div>
         <a href="{{ route('posts.show', $post->slug) }}"
             class="text-xl font-bold tex-gray-900 dark:text-[#DFD3C3]">{{ $post->title }}</a>
